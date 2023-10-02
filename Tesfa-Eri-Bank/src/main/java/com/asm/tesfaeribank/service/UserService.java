@@ -1,8 +1,7 @@
-package august.bank.app.bankproject.service;
 
-import august.bank.app.bankproject.dto.UserDto;
+package com.asm.tesfaeribank.service;
 
-import august.bank.app.bankproject.entity.User;
+import com.asm.tesfaeribank.dto.UserDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

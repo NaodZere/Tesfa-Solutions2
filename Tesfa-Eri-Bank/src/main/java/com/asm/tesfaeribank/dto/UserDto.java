@@ -1,7 +1,7 @@
-package august.bank.app.bankproject.dto;
+package com.asm.tesfaeribank.dto;
 
+import com.asm.tesfaeribank.domain.Role;
 import lombok.Data;
-import august.bank.app.bankproject.entity.Role;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
