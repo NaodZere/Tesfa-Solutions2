@@ -1,9 +1,10 @@
-package august.bank.app.bankproject.service.Impl;
 
-import august.bank.app.bankproject.dto.UserDto;
-import august.bank.app.bankproject.entity.User;
-import august.bank.app.bankproject.repository.UserRepository;
-import august.bank.app.bankproject.service.UserService;
+package com.asm.tesfaeribank.service.impl;
+
+import com.asm.tesfaeribank.domain.User;
+import com.asm.tesfaeribank.dto.UserDto;
+import com.asm.tesfaeribank.repository.UserRepository;
+import com.asm.tesfaeribank.service.UserService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
