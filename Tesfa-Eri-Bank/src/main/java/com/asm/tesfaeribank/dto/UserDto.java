@@ -1,7 +1,7 @@
 package com.asm.tesfaeribank.dto;
 
+import com.asm.tesfaeribank.domain.Role;
 import lombok.Data;
-
 import lombok.NoArgsConstructor;
 
 import java.util.List;
