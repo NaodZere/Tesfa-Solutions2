@@ -1,7 +1,6 @@
-package august.bank.app.bankproject.dto;
+package com.asm.tesfaeribank.dto;
 
 import lombok.Data;
-import august.bank.app.bankproject.entity.Role;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -18,5 +17,5 @@ public class UserDto {
 
     private String password;
 
-    private List<Role> roles;
+//    private List<Role> roles;
 }
