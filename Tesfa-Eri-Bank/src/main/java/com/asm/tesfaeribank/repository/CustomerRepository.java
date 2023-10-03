@@ -1,5 +1,6 @@
 package com.asm.tesfaeribank.repository;
 
+
 import com.asm.tesfaeribank.domain.Customer;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
