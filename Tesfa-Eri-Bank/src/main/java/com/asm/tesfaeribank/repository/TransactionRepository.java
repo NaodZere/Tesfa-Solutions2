@@ -1,3 +1,4 @@
+
 package com.asm.tesfaeribank.repository;
 
 import org.springframework.data.mongodb.repository.MongoRepository;

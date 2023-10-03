@@ -1,6 +1,4 @@
 
-package com.asm.tesfaeribank.service;
-
 import com.asm.tesfaeribank.dto.UserDto;
 import org.springframework.stereotype.Service;
 
