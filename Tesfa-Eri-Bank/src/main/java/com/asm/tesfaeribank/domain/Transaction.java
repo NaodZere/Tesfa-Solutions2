@@ -7,14 +7,32 @@
 //import org.springframework.data.annotation.Id;
 //import org.springframework.data.mongodb.core.mapping.Document;
 //
-//@Document(collection = "roles")
+//import java.time.LocalDateTime;
+//
 //@Data
 //@NoArgsConstructor
 //@AllArgsConstructor
-//public class Role {
+//@Document(collection = "transactions")
+//public class Transaction {
 //
 //    @Id
 //    private String id;
 //
-//    private String name;
+//    private LocalDateTime dateTime;
+//
+//    private String number;
+//
+//
+//    private Double amount;
+//
+//
+//    private String type;
+//    private String fromId;
+//
+//
+//    private String toId;
+//
+//    private Double balance;
+//
+//
 //}

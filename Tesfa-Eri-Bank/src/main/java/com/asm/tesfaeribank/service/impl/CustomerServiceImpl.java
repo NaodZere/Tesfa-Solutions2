@@ -1,8 +1,11 @@
 package com.asm.tesfaeribank.service.impl;
 
 
+import com.asm.tesfaeribank.domain.Account;
 import com.asm.tesfaeribank.domain.Customer;
+import com.asm.tesfaeribank.dto.AccountDto;
 import com.asm.tesfaeribank.dto.CustomerDto;
+import com.asm.tesfaeribank.repository.AccountRepository;
 
 import com.asm.tesfaeribank.repository.CustomerRepository;
 import com.asm.tesfaeribank.service.CustomerService;
@@ -22,8 +25,9 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerRepository customerRepository;
 
 
-//    @Autowired
-//    private AccountRepository accountRepository;
+    @Autowired
+    private AccountRepository accountRepository;
+
 
     @Autowired
     private ModelMapper modelMapper;
@@ -81,46 +85,46 @@ public class CustomerServiceImpl implements CustomerService {
         }
     }
 
-//    @Override
-//    public List<AccountDto> getAllAccounts(String id) {
-//        try {
-//            Customer customer = customerRepository.findById(id).get();
-//            return customer.getAccounts().stream()
-//                    .map(account -> modelMapper.map(account, AccountDto.class))
-//                    .collect(Collectors.toList());
-//        } catch (Exception e) {
-//            throw new RuntimeException("Customer not found");
-//        }
-//    }
-//
-//    @Override
-//    public void addAccountToCustomer(String customerId, AccountDto accountDto) {
-//        try {
-//            Customer customer = customerRepository.findById(customerId).get();
-//            Account account = modelMapper.map(accountDto, Account.class);
-//            account = accountRepository.save(account);
-//            customer.getAccounts().add(account);
-//            customerRepository.save(customer);
-//        } catch (Exception e) {
-//            throw new RuntimeException("Customer not found");
-//        }
-//
-//    }
-//
-//    @Override
-//    public void deleteAccountFromCustomer(String customerId, String accountId) {
-//
-//        try {
-//            Customer customer = customerRepository.findById(customerId).get();
-//            Account account = accountRepository.findById(accountId).get();
-//            customer.getAccounts().remove(account);
-//            accountRepository.deleteById(accountId);
-//            customerRepository.save(customer);
-//        } catch (Exception e) {
-//            throw new RuntimeException(e.getMessage());
-//        }
-//
-//    }
+    @Override
+    public List<AccountDto> getAllAccounts(String id) {
+        try {
+            Customer customer = customerRepository.findById(id).get();
+            return customer.getAccounts().stream()
+                    .map(account -> modelMapper.map(account, AccountDto.class))
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            throw new RuntimeException("Customer not found");
+        }
+    }
+
+    @Override
+    public void addAccountToCustomer(String customerId, AccountDto accountDto) {
+        try {
+            Customer customer = customerRepository.findById(customerId).get();
+            Account account = modelMapper.map(accountDto, Account.class);
+            account = accountRepository.save(account);
+            customer.getAccounts().add(account);
+            customerRepository.save(customer);
+        } catch (Exception e) {
+            throw new RuntimeException("Customer not found");
+        }
+
+    }
+
+    @Override
+    public void deleteAccountFromCustomer(String customerId, String accountId) {
+
+        try {
+            Customer customer = customerRepository.findById(customerId).get();
+            Account account = accountRepository.findById(accountId).get();
+            customer.getAccounts().remove(account);
+            accountRepository.deleteById(accountId);
+            customerRepository.save(customer);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+
+    }
 
     @Override
     public CustomerDto getCustomerByUsername(String username) {
