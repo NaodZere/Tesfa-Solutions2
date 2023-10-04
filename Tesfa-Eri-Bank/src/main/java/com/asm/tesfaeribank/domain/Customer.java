@@ -30,8 +30,8 @@ public class Customer {
     private String username;
 
 
-//    @DocumentReference
-//    private List<Account> accounts;
+    @DocumentReference
+    private List<Account> accounts;
 
 
 }

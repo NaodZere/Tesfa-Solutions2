@@ -1,4 +1,4 @@
-//package com.asm.tesfaeribank.security;
+//package com.asm.tesfaeribank.dto;
 //
 //
 //import lombok.AllArgsConstructor;
@@ -8,6 +8,8 @@
 //@Data
 //@NoArgsConstructor
 //@AllArgsConstructor
-//public class ResponseDto {
-//    private String accessToken;
+//public class RoleDto {
+//
+//    private String id;
+//    private String name;
 //}
