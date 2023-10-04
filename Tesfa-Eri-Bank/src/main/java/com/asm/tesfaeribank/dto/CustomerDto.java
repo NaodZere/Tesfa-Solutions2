@@ -1,6 +1,8 @@
 package com.asm.tesfaeribank.dto;
 
+
 import com.asm.tesfaeribank.domain.Account;
+
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,6 +21,7 @@ public class CustomerDto {
     private String email;
 
     private String username;
+
 
 
     private List<Account> accounts;

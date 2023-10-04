@@ -3,6 +3,7 @@ package com.asm.tesfaeribank.controller;
 import com.asm.tesfaeribank.dto.AccountDto;
 import com.asm.tesfaeribank.dto.CustomerDto;
 import com.asm.tesfaeribank.service.AccountService;
+
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -105,6 +106,7 @@ public class CustomerController {
     public AccountDto transfer(@PathVariable String fromAccountId, @PathVariable String toAccountId, @RequestParam Double amount) {
         return accountService.transfer(fromAccountId, toAccountId, amount);
     }
+
 
 
 }

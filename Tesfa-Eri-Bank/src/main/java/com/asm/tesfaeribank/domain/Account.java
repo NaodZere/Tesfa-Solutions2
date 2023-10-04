@@ -1,3 +1,4 @@
+
 //package com.asm.tesfaeribank.domain;
 //
 //import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -28,3 +29,4 @@
 //    private List<Transaction> transactions;
 //
 //}
+

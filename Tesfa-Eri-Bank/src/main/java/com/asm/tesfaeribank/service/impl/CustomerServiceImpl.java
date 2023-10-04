@@ -1,10 +1,12 @@
 package com.asm.tesfaeribank.service.impl;
 
+
 import com.asm.tesfaeribank.domain.Account;
 import com.asm.tesfaeribank.domain.Customer;
 import com.asm.tesfaeribank.dto.AccountDto;
 import com.asm.tesfaeribank.dto.CustomerDto;
 import com.asm.tesfaeribank.repository.AccountRepository;
+
 import com.asm.tesfaeribank.repository.CustomerRepository;
 import com.asm.tesfaeribank.service.CustomerService;
 import org.modelmapper.ModelMapper;
@@ -25,6 +27,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Autowired
     private AccountRepository accountRepository;
+
 
     @Autowired
     private ModelMapper modelMapper;
