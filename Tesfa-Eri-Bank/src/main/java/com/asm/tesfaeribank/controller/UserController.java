@@ -52,7 +52,14 @@ public class UserController {
         return userService.readById(id);
     }
 
-    @PostMapping("creatUser")
+
+    @GetMapping("allUsers")
+    public ResponseEntity<?> getAllUsers() {
+        return new ResponseEntity<>(userService.readAll(), HttpStatus.OK);
+    }
+
+    @PostMapping("createUser")
+
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
 
         try {
@@ -75,11 +82,11 @@ public class UserController {
     }
 
 
+
     @PostMapping("/login")
     public ResponseEntity<ResponseDto> login(@RequestBody UserDto userDto) {
 
         try {
-
 
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(userDto.getUsername(), userDto.getPassword()));
 

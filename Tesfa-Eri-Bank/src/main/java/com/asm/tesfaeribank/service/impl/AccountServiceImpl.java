@@ -78,70 +78,158 @@ public class AccountServiceImpl implements AccountService {
     }
 
 //    TODO: Implement the following methods
+//
+//    @Override
+//    public AccountDto deposit(String accountId, Double amount) {
+//        try {
+//            Account account = accountRepository.findById(accountId).get();
+//            account.setBalance(account.getBalance() + amount);
+//            Transaction transaction = new Transaction();
+//            transaction.setAmount(amount);
+//            transaction.setBalance(account.getBalance());
+//            transaction.setType("deposit");
+//            transaction.setToId(account.getId());
+//            transaction.setDateTime(LocalDateTime.now());
+//            transaction = transactionRepository.save(transaction);
+//            account.getTransactions().add(transaction);
+//            return modelMapper.map(accountRepository.save(account), AccountDto.class);
+//
+//        } catch (RuntimeException e) {
+//            throw new RuntimeException(e.getMessage());
+//        }
+//
+//    }
+//
+//    @Override
+//    public AccountDto withdraw(String accountId, Double amount) {
+//        try {
+//            Account account = accountRepository.findById(accountId).get();
+//            account.setBalance(account.getBalance() - amount);
+//            Transaction transaction = new Transaction();
+//            transaction.setAmount(amount);
+//            transaction.setType("withdraw");
+//            transaction.setBalance(account.getBalance());
+//            transaction.setFromId(account.getId());
+//            transaction.setDateTime(LocalDateTime.now());
+//            transaction = transactionRepository.save(transaction);
+//            account.getTransactions().add(transaction);
+//            return modelMapper.map(accountRepository.save(account), AccountDto.class);
+//        } catch (RuntimeException e) {
+//            throw new RuntimeException(e.getMessage());
+//        }
+//
+//    }
+//
+//    @Override
+//    public AccountDto transfer(String fromAccountId, String toAccountId, Double amount) {
+//        try {
+//            Account fromAccount = accountRepository.findById(fromAccountId).get();
+//            Account toAccount = accountRepository.findById(toAccountId).get();
+//            fromAccount.setBalance(fromAccount.getBalance() - amount);
+//            toAccount.setBalance(toAccount.getBalance() + amount);
+//            Transaction transaction = new Transaction();
+//            transaction.setAmount(amount);
+//            transaction.setType("transfer");
+//            transaction.setBalance(fromAccount.getBalance());
+//            transaction.setFromId(fromAccount.getId());
+//            transaction.setToId(toAccount.getId());
+//            transaction.setDateTime(LocalDateTime.now());
+//            transaction = transactionRepository.save(transaction);
+//            fromAccount.getTransactions().add(transaction);
+//            toAccount.getTransactions().add(transaction);
+//            accountRepository.save(toAccount);
+//            fromAccount = accountRepository.save(fromAccount);
+//            return modelMapper.map(fromAccount, AccountDto.class);
+//        } catch (RuntimeException e) {
+//            throw new RuntimeException(e.getMessage());
+//        }
+//    }
+@Override
+public AccountDto deposit(String accountId, Double amount) {
+    try {
+        Account account = accountRepository.findById(accountId).orElseThrow(() -> new RuntimeException("Account not found"));
+        account.setBalance(account.getBalance() + amount);
 
-    @Override
-    public AccountDto deposit(String accountId, Double amount) {
-        try {
-            Account account = accountRepository.findById(accountId).get();
-            account.setBalance(account.getBalance() + amount);
-            Transaction transaction = new Transaction();
-            transaction.setAmount(amount);
-            transaction.setBalance(account.getBalance());
-            transaction.setType("deposit");
-            transaction.setToId(account.getId());
-            transaction.setDateTime(LocalDateTime.now());
-            transaction = transactionRepository.save(transaction);
-            account.getTransactions().add(transaction);
-            return modelMapper.map(accountRepository.save(account), AccountDto.class);
+        // Create and save the transaction
+        Transaction transaction = createTransaction(amount, "deposit", null, account.getId());
+        transactionRepository.save(transaction);
 
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e.getMessage());
-        }
-
+        account.getTransactions().add(transaction);
+        return modelMapper.map(accountRepository.save(account), AccountDto.class);
+    } catch (Exception e) {
+        throw new RuntimeException("Failed to deposit amount: " + e.getMessage());
     }
+}
 
     @Override
     public AccountDto withdraw(String accountId, Double amount) {
         try {
-            Account account = accountRepository.findById(accountId).get();
+            Account account = accountRepository.findById(accountId).orElseThrow(() -> new RuntimeException("Account not found"));
+
+            // Check if withdrawal is above $2000
+            if (amount > 2000) {
+                throw new RuntimeException("Withdrawal amount exceeds $2000. Please proceed with caution.");
+            }
+
+            // Check if the withdrawal exceeds the account balance
+            if (amount > account.getBalance()) {
+                throw new RuntimeException("Withdrawal amount exceeds account balance. Transaction cannot be completed.");
+            }
+
             account.setBalance(account.getBalance() - amount);
-            Transaction transaction = new Transaction();
-            transaction.setAmount(amount);
-            transaction.setType("withdraw");
-            transaction.setBalance(account.getBalance());
-            transaction.setFromId(account.getId());
-            transaction.setDateTime(LocalDateTime.now());
-            transaction = transactionRepository.save(transaction);
+
+            // Create and save the transaction
+            Transaction transaction = createTransaction(amount, "withdraw", account.getId(), null);
+            transactionRepository.save(transaction);
+
             account.getTransactions().add(transaction);
             return modelMapper.map(accountRepository.save(account), AccountDto.class);
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to withdraw amount: " + e.getMessage());
         }
-
     }
 
     @Override
     public AccountDto transfer(String fromAccountId, String toAccountId, Double amount) {
         try {
-            Account fromAccount = accountRepository.findById(fromAccountId).get();
-            Account toAccount = accountRepository.findById(toAccountId).get();
+            Account fromAccount = accountRepository.findById(fromAccountId).orElseThrow(() -> new RuntimeException("From Account not found"));
+            Account toAccount = accountRepository.findById(toAccountId).orElseThrow(() -> new RuntimeException("To Account not found"));
+
+            // Check if transfer amount exceeds the account balance
+            if (amount > fromAccount.getBalance()) {
+                throw new RuntimeException("Transfer amount exceeds account balance. Transaction cannot be completed.");
+            }
+
             fromAccount.setBalance(fromAccount.getBalance() - amount);
             toAccount.setBalance(toAccount.getBalance() + amount);
-            Transaction transaction = new Transaction();
-            transaction.setAmount(amount);
-            transaction.setType("transfer");
-            transaction.setBalance(fromAccount.getBalance());
-            transaction.setFromId(fromAccount.getId());
-            transaction.setToId(toAccount.getId());
-            transaction.setDateTime(LocalDateTime.now());
-            transaction = transactionRepository.save(transaction);
-            fromAccount.getTransactions().add(transaction);
-            toAccount.getTransactions().add(transaction);
+
+            // Create and save the transaction for the from account
+            Transaction fromTransaction = createTransaction(amount, "transfer", fromAccount.getId(), toAccount.getId());
+            transactionRepository.save(fromTransaction);
+            fromAccount.getTransactions().add(fromTransaction);
+
+            // Create and save the transaction for the to account
+            Transaction toTransaction = createTransaction(amount, "transfer", fromAccount.getId(), toAccount.getId());
+            transactionRepository.save(toTransaction);
+            toAccount.getTransactions().add(toTransaction);
+
             accountRepository.save(toAccount);
             fromAccount = accountRepository.save(fromAccount);
             return modelMapper.map(fromAccount, AccountDto.class);
-        } catch (RuntimeException e) {
-            throw new RuntimeException(e.getMessage());
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to transfer amount: " + e.getMessage());
         }
+    }
+
+    // Helper method to create a transaction
+    private Transaction createTransaction(Double amount, String type, String fromId, String toId) {
+        Transaction transaction = new Transaction();
+        transaction.setAmount(amount);
+        transaction.setType(type);
+        transaction.setBalance(null);  // Balance will be updated after the transaction
+        transaction.setFromId(fromId);
+        transaction.setToId(toId);
+        transaction.setDateTime(LocalDateTime.now());
+        return transaction;
     }
 }
