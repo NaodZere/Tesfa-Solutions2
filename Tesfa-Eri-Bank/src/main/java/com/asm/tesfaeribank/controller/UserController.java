@@ -53,10 +53,6 @@ public class UserController {
     }
 
 
-    @GetMapping("allUsers")
-    public ResponseEntity<?> getAllUsers() {
-        return new ResponseEntity<>(userService.readAll(), HttpStatus.OK);
-    }
 
     @PostMapping("createUser")
 
