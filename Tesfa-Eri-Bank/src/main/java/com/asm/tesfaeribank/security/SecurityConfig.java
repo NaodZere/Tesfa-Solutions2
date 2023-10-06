@@ -1,6 +1,7 @@
 //package com.asm.tesfaeribank.security;
 //
 //
+//import org.springframework.beans.factory.BeanFactory;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.context.annotation.Bean;
 //import org.springframework.context.annotation.Configuration;
@@ -63,4 +64,6 @@
 //    public PasswordEncoder passwordEncoder() {
 //        return new BCryptPasswordEncoder();
 //    }
+//
+//
 //}
