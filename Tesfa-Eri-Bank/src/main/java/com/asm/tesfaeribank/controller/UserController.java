@@ -41,13 +41,18 @@ public class UserController {
         }
     }
 
+    @GetMapping("allusers")
+    public ResponseEntity<?> getAllUsers(){
+        return new ResponseEntity<>(userService.readAll(), HttpStatus.OK);
+    }
+
 
     @GetMapping("/{id}")
     public UserDto readById(@PathVariable String id) {
         return userService.readById(id);
     }
 
-    @PostMapping
+    @PostMapping("creatUser")
     public ResponseEntity<UserDto> createUser(@RequestBody UserDto userDto) {
 
         try {
