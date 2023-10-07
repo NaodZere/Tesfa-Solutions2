@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.asm.tesfaeribank.service.CustomerService;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @NoArgsConstructor
@@ -91,19 +92,28 @@ public class CustomerController {
         customerService.deleteAccountFromCustomer(id, accountId);
     }
 
-    @PutMapping(value = "/{id}/accounts/{accountId}/deposit")
+//    @PutMapping(value = "/{id}/accounts/{accountId}/deposit")
+//
+//    public AccountDto deposit(@PathVariable String accountId, @RequestParam double amount) {
+//        return accountService.deposit(accountId, amount);
+//    }
 
-    public AccountDto deposit(@PathVariable String accountId, @RequestParam double amount) {
+    @PutMapping(value = "/{id}/accounts/{accountId}/deposit")
+    public AccountDto deposit(@PathVariable String accountId, @RequestBody Map<String, Double> requestBody) {
+        Double amount = requestBody.get("amount");
         return accountService.deposit(accountId, amount);
     }
 
+
     @PutMapping(value = "/{id}/accounts/{accountId}/withdraw")
-    public AccountDto withdraw(@PathVariable String accountId, @RequestParam double amount) {
+    public AccountDto withdraw(@PathVariable String accountId, @RequestBody Map<String, Double> requestBody) {
+        Double amount = requestBody.get("amount");
         return accountService.withdraw(accountId, amount);
     }
 
     @PutMapping(value = "/{id}/accounts/{fromAccountId}/transfer/{toAccountId}")
-    public AccountDto transfer(@PathVariable String fromAccountId, @PathVariable String toAccountId, @RequestParam Double amount) {
+    public AccountDto transfer(@PathVariable String fromAccountId, @PathVariable String toAccountId, @RequestBody Map<String, Double> requestBody) {
+        Double amount = requestBody.get("amount");
         return accountService.transfer(fromAccountId, toAccountId, amount);
     }
 
