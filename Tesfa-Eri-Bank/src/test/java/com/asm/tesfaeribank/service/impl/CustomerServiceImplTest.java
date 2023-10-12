@@ -31,6 +31,8 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 @ContextConfiguration(classes = {CustomerServiceImpl.class})
 @ExtendWith(SpringExtension.class)
+//test
+
 class CustomerServiceImplTest {
     @MockBean
     private AccountRepository accountRepository;

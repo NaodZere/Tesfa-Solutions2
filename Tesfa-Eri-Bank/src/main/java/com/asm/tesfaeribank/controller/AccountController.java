@@ -17,6 +17,7 @@ public class AccountController {
 
     @PostMapping(value = "")
     public AccountDto addAccount(@RequestBody AccountDto accountDto) {
+
         return accountService.addAccount(accountDto);
     }
 

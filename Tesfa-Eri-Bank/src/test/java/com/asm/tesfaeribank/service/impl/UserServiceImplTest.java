@@ -31,6 +31,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ContextConfiguration(classes = {UserServiceImpl.class})
 @ExtendWith(SpringExtension.class)
 class UserServiceImplTest {
+    //test
     @MockBean
     private AuthenticationManager authenticationManager;
 
